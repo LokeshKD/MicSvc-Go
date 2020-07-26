@@ -18,6 +18,16 @@ func NewProducts(l *log.Logger) *Products {
 }
 
 func (p *Products) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		p.getProducts(rw, r)
+		return
+	}
+
+	// Catch all
+	rw.WriteHeader(http.StatusMethodNotAllowed)
+}
+
+func (p *Products) getProducts(rw http.ResponseWriter, r *http.Request) {
 	lp := data.GetProducts()
 	/*
 		d, err := json.Marshal(lp)
