@@ -1,3 +1,17 @@
+// Package handlers classification of Product API
+//
+// Documentation for Product API
+//
+//  Schemes: http
+//  BasePath: /
+//  Version: 1.0.0
+//
+//  Consumes:
+//  - application/json
+//
+//  Produces:
+//  - application/json
+// swagger:meta
 package handlers
 
 import (
@@ -7,9 +21,17 @@ import (
 	"net/http"
 	"strconv"
 
-	"./data"
+	"../data"
 	"github.com/gorilla/mux"
 )
+
+//A list of products returned in response
+//swagger:response productResponse
+type productResponse struct {
+	//All Products in the system
+	//in: body
+	Body []data.Product
+}
 
 // Products Struct
 type Products struct {
@@ -50,6 +72,11 @@ func (p *Products) UpdateProduct(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+// swagger:route GET / listProducts
+// Returns a list of products
+// responses:
+// 	200: productResponse
 
 //GetProducts func
 func (p *Products) GetProducts(rw http.ResponseWriter, r *http.Request) {
